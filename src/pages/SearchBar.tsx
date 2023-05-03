@@ -16,12 +16,18 @@ const SearchBar: React.FunctionComponent = () => {
 	const [autocomplete, setAutocomplete] = useState<Autocomplete[]>([]);
 	const [popular, setPopular] = useState<Boolean>(true);
 	const [focus, setFocus] = useState<Boolean>(false);
-	const adviseDepth : number = 5; // Change this variable and set the number of advises result you want when calling the API
+
+	if (advise === undefined) {
+		fetch("https://api.comparatrip.eu/cities/popular/5")
+		.then(r => r.json())
+		.then(data => {
+			setAdvise(data)
+		})
+	}
 
 	const chooseDisplay = (str : string) => {
 		if (str.length > 1) {
 			setPopular(false);
-			getPopularCities(adviseDepth);
 		}
 		else {
 			getAutocomplete(str);
@@ -50,12 +56,6 @@ const SearchBar: React.FunctionComponent = () => {
 		chooseDisplay(event.target.value);
 		setFocus(true);
 		console.log(`user focused "${event.target.value}"`);
-	};
-
-	const getPopularCities = async (n : number) => {
-		const data = await (await fetch(`https://api.comparatrip.eu/cities/popular/${n}`)).json();
-		setAdvise(data);
-		console.log('popular cities proposal : ', data);
 	};
 	
 	const getAutocomplete = async (query : string) => {
