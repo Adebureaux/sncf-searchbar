@@ -3,14 +3,18 @@ import React, { useState, useRef } from "react";
 const SearchBar: React.FunctionComponent = () => {
 	const [query, setQuery] = useState("");
 
+	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault(); // Avoid the refresh on the page when pressing enter or click on search
+		console.log(`user current search input: "${query}"`);
+	};
+	
 	const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		setQuery(event.target.value);
 		console.log(`user submit input: "${event.target.value}"`);
 	};
 
-	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault(); // Avoid the refresh on the page when pressing enter or click on search
-		console.log(`user current search input: "${query}"`);
+	const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+		console.log(`user focused "${event.target.value}"`);
 	};
 
 	return (
@@ -23,6 +27,7 @@ const SearchBar: React.FunctionComponent = () => {
 						placeholder="Une destination, demande ..."
 						value={query}
 						onChange={handleInputChange}
+						onFocus={handleFocus}
 						/>
 				</div>
 				<div className="">
