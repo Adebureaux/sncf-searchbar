@@ -9,22 +9,30 @@ const SearchBar: React.FunctionComponent = () => {
 	};
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault(); // Avoid the refresh on the page when submitting the form
-		console.log(`user submit input: "${query}"`);
+		event.preventDefault(); // Avoid the refresh on the page when pressing enter or click on search
+		console.log(`user current search input: "${query}"`);
 	};
 
 	return (
-		<form onSubmit={handleFormSubmit}>
-			<div>
-				<input
-					type="text"
-					placeholder="Une destination, demande ..."
-					value={query}
-					onChange={handleInputChange}
-				/>
-			</div>
-		</form>
-		);
+		<div className="searchbar">
+			<form onSubmit={handleFormSubmit}>
+				<div className="">
+					<input
+						className="rounded-full"
+						type="text"
+						placeholder="Une destination, demande ..."
+						value={query}
+						onChange={handleInputChange}
+						/>
+				</div>
+				<div className="">
+					<button type="submit">
+						<img className="rounded-full" src="search.png" />
+					</button>
+				</div>
+			</form>
+		</div>
+	);
 };
 
 export default SearchBar;
