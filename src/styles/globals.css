@@ -7,6 +7,27 @@ body {
 }
 
 .searchbar img {
-  background-color: #14b7e4;
-  max-width: 5vw;
+  background-color: #8de8fe;
+}
+
+.searchbar img:hover {
+  background-color: #40CDF2;
+}
+
+.searchbar input {
+  width: 99%;
+  padding: 0 1.5rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  min-height: 3.5rem;
+  color: black;
+}
+
+.searchbar {
+  position: relative;
+}
+
+.searchbar button {
+  position: fixed;
+  width: 56px;
 }

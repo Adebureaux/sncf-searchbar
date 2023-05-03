@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 interface Advise {
-  unique_name: string;
+	unique_name: string;
 }
 
 interface Autocomplete {
-  unique_name: string;
+	unique_name: string;
 	local_name: string;
 }
 
@@ -43,25 +43,23 @@ const SearchBar: React.FunctionComponent = () => {
 	};
 	
 	return (
-		<div className="searchbar">
+		<div className="searchbar m-24">
+			<div className="container">
 			<form onSubmit={handleFormSubmit}>
-				<div className="">
-					<input
-						className="rounded-full"
-						type="text"
-						placeholder="Une destination, demande ..."
-						value={query}
-						onChange={handleInputChange}
-						onFocus={handleFocus}
-						/>
-				</div>
-				<div className="">
+				<input
+					className="rounded-full"
+					type="text"
+					placeholder="Une destination, demande ..."
+					value={query}
+					onChange={handleInputChange}
+					onFocus={handleFocus}
+				/>
 					<button type="submit">
 						<img className="rounded-full" src="search.png" />
 					</button>
-				</div>
 			</form>
-		</div>
+			</div>
+			</div>
 	);
 };
 
