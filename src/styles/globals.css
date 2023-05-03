@@ -6,6 +6,10 @@ body {
   background-color: #0C131F;
 }
 
+.searchbar {
+  position: relative;
+}
+
 .searchbar img {
   background-color: #8de8fe;
 }
@@ -16,15 +20,14 @@ body {
 
 .searchbar input {
   width: 100%;
+  padding: 0 1.5rem;
+  min-width: 200px;
   min-height: 3.5rem;
   color: black;
 }
 
-.searchbar {
-  position: relative;
-}
 
 .searchbar button {
-  position: fixed;
+  position: absolute;
   width: 56px;
 }
