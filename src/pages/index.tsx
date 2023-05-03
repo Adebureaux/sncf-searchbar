@@ -1,4 +1,4 @@
-import SearchBar from './SearchBar'
+import SearchBar from "./SearchBar";
 
 export default function Home() {
 	const handleSearch = (query: string) => {
@@ -7,7 +7,7 @@ export default function Home() {
 
 	return (
 		<main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
-			<SearchBar onSearch={handleSearch}/>
+			<SearchBar onSearch={handleSearch} />
 		</main>
 	);
-}
+};

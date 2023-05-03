@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 interface SearchBarProps {
 	onSearch: (query: string) => void;
-}
+};
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 const [query, setQuery] = useState("");
@@ -20,6 +20,7 @@ return (
 	<form onSubmit={handleFormSubmit}>
 		<div>
 		<input
+			className="classone"
 			type="text"
 			placeholder="Recherche"
 			value={query}
