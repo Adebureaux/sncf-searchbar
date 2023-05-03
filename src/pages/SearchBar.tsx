@@ -1,22 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+
+interface Advise {
+  unique_name: string;
+}
+
+interface Autocomplete {
+  unique_name: string;
+	local_name: string;
+}
 
 const SearchBar: React.FunctionComponent = () => {
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useState<string>("");
+	const [advise, setAdvise] = useState<Advise[]>([]);
+	const [autocomplete, setAutocomplete] = useState<Autocomplete[]>([]);
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault(); // Avoid the refresh on the page when pressing enter or click on search
-		console.log(`user current search input: "${query}"`);
+		// console.log(`user current search input: "${query}"`);
+		getAutocomplete(query);
 	};
 	
-	const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setQuery(event.target.value);
-		console.log(`user submit input: "${event.target.value}"`);
+		// console.log(`user submit input: "${event.target.value}"`);
 	};
 
 	const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-		console.log(`user focused "${event.target.value}"`);
+		getPopularCities(5);
+		// console.log(`user focused "${event.target.value}"`);
 	};
 
+	const getPopularCities = async (n : number) => {
+		const data = await (await fetch(`https://api.comparatrip.eu/cities/popular/${n}`)).json();
+		setAdvise(data);
+		console.log('popular cities proposal : ', data);
+	};
+	
+	const getAutocomplete = async (query : string) => {
+		const data = await (await fetch(`https://api.comparatrip.eu/cities/autocomplete/?q=${query}`)).json();
+		setAutocomplete(data);
+		console.log('cities based on the search: ', data);
+	};
+	
 	return (
 		<div className="searchbar">
 			<form onSubmit={handleFormSubmit}>
