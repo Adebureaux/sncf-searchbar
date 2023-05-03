@@ -1,33 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
-interface SearchBarProps {
-	onSearch: (query: string) => void;
-};
+const SearchBar: React.FunctionComponent = () => {
+	const [query, setQuery] = useState("");
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-const [query, setQuery] = useState("");
+	const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		setQuery(event.target.value);
+		console.log(`user submit input: "${event.target.value}"`);
+	};
 
-const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-	setQuery(event.target.value);
-};
+	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault(); // Avoid the refresh on the page when submitting the form
+		console.log(`user submit input: "${query}"`);
+	};
 
-const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-	event.preventDefault(); // Avoid refreshing the page when submitting the form
-	onSearch(query);
-};
-
-return (
-	<form onSubmit={handleFormSubmit}>
-		<div>
-			<input
-				type="text"
-				placeholder="Recherche"
-				value={query}
-				onChange={handleInputChange}
-			/>
-		</div>
-	</form>
-	);
+	return (
+		<form onSubmit={handleFormSubmit}>
+			<div>
+				<input
+					type="text"
+					placeholder="Une destination, demande ..."
+					value={query}
+					onChange={handleInputChange}
+				/>
+			</div>
+		</form>
+		);
 };
 
 export default SearchBar;
