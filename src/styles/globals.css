@@ -14,6 +14,10 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+  /* Prevent Dark mode to put the input in white */
+  input {
+    color: black;
+  }
 }
 
 body {
@@ -26,7 +30,4 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-input {
-  color: black;
-}
 

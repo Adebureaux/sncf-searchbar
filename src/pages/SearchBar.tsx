@@ -19,13 +19,12 @@ const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 return (
 	<form onSubmit={handleFormSubmit}>
 		<div>
-		<input
-			className="classone"
-			type="text"
-			placeholder="Recherche"
-			value={query}
-			onChange={handleInputChange}
-		/>
+			<input
+				type="text"
+				placeholder="Recherche"
+				value={query}
+				onChange={handleInputChange}
+			/>
 		</div>
 	</form>
 	);
