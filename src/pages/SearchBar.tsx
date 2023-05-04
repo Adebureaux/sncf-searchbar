@@ -1,42 +1,46 @@
 import React, { useState } from "react";
 
-interface Advise {
+interface Autocomplete {
 	unique_name: string;
 	local_name: string;
 }
 
-interface Autocomplete {
+interface Popular {
 	unique_name: string;
 	local_name: string;
 }
 
 const SearchBar: React.FunctionComponent = () => {
 	const [query, setQuery] = useState<string>("");
-	const [advise, setAdvise] = useState<Advise[]>([]);
+	const [popular, setPopular] = useState<Popular[]>([]);
 	const [autocomplete, setAutocomplete] = useState<Autocomplete[]>([]);
-	const [popular, setPopular] = useState<Boolean>(true);
+	const [display, setDisplay] = useState<Number>(0); // 0 -> Do not display, 1 -> Display popular, 2 -> Display autocomplete, 3 -> Display popularFrom, 4 -> Display no result
 	const [focus, setFocus] = useState<Boolean>(false);
 
-	if (advise === undefined) {
+	if (!popular.length) {
 		fetch("https://api.comparatrip.eu/cities/popular/5")
-		.then(r => r.json())
+		.then(res => res.json())
 		.then(data => {
-			setAdvise(data)
-		})
+			setPopular(data);
+		});
 	}
-
-	const chooseDisplay = (str : string) => {
-		if (str.length > 1) {
-			setPopular(false);
-		}
+	
+	const chooseDisplay = (query : string) => {
+		console.log("query.length", query.length);
+		console.log("autocomplete.length", autocomplete.length);
+		if (query.length < 2)
+			setDisplay(1);
 		else {
-			getAutocomplete(str);
-			setPopular(true);
+			getAutocomplete(query);
+			if (autocomplete.length)
+				setDisplay(2);
+			else
+				setDisplay(4);
 		}
 	};
 
 	const reset = () => {
-		setPopular(false);
+		setDisplay(0);
 		setFocus(false);
 		setQuery("");
 		setAutocomplete([]);
@@ -55,10 +59,8 @@ const SearchBar: React.FunctionComponent = () => {
 	};
 
 	const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-		chooseDisplay(event.target.value);
 		setFocus(true);
-		if (query.length < 2)
-			setPopular(true);
+		chooseDisplay(event.target.value);
 		console.log(`user focused "${event.target.value}"`);
 	};
 	
@@ -88,15 +90,15 @@ const SearchBar: React.FunctionComponent = () => {
 
 			<ul className="bg-white m-2 rounded-xl">
 				{focus && <div className="p-4">
-					{!popular && autocomplete.map(
-						(data: Autocomplete) => (
+					{display === 1 && popular.map(
+						(data: Popular) => (
 							<li key={data.unique_name}>
 								{data.local_name}
 							</li>
 						)
 					)}
-					{popular && advise.map(
-						(data: Advise) => (
+					{display === 2 && autocomplete.map(
+						(data: Autocomplete) => (
 							<li key={data.unique_name}>
 								{data.local_name}
 							</li>
@@ -108,5 +110,6 @@ const SearchBar: React.FunctionComponent = () => {
 		</div>
 	);
 };
+
 
 export default SearchBar;
