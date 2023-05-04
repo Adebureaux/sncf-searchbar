@@ -16,6 +16,7 @@ const SearchBar: React.FunctionComponent = () => {
 	const [autocomplete, setAutocomplete] = useState<Autocomplete[]>([]);
 	const [display, setDisplay] = useState<Number>(0); // 0 -> Do not display, 1 -> Display popular, 2 -> Display autocomplete, 3 -> Display popularFrom, 4 -> Display no result
 	const [focus, setFocus] = useState<Boolean>(false);
+	const [loaded, setLoaded] = useState<Boolean>(false);
 
 	if (!popular.length) {
 		fetch("https://api.comparatrip.eu/cities/popular/5")
@@ -26,24 +27,25 @@ const SearchBar: React.FunctionComponent = () => {
 	}
 	
 	const chooseDisplay = (query : string) => {
-		console.log("query.length", query.length);
-		console.log("autocomplete.length", autocomplete.length);
-		if (query.length < 2)
+		if (query.length < 2) {
+			setAutocomplete([]);
+			setLoaded(false);
 			setDisplay(1);
+		}
 		else {
 			getAutocomplete(query);
-			if (autocomplete.length)
-				setDisplay(2);
-			else
-				setDisplay(4);
+			setDisplay(2);
 		}
+		console.log("query.length", query.length);
+		console.log("autocomplete.length", autocomplete.length);
 	};
 
 	const reset = () => {
-		setDisplay(0);
-		setFocus(false);
 		setQuery("");
 		setAutocomplete([]);
+		setDisplay(0);
+		setFocus(false);
+		setLoaded(false);
 	}
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -67,6 +69,7 @@ const SearchBar: React.FunctionComponent = () => {
 	const getAutocomplete = async (query : string) => {
 		const data = await (await fetch(`https://api.comparatrip.eu/cities/autocomplete/?q=${query}`)).json();
 		setAutocomplete(data);
+		setLoaded(true);
 		console.log('cities based on the search: ', data);
 	};
 
@@ -97,7 +100,7 @@ const SearchBar: React.FunctionComponent = () => {
 							</li>
 						)
 					)}
-					{display === 2 && autocomplete.map(
+					{display === 2 && loaded && autocomplete.map(
 						(data: Autocomplete) => (
 							<li key={data.unique_name}>
 								{data.local_name}
