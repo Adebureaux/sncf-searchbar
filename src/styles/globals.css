@@ -7,27 +7,35 @@ body {
 }
 
 .searchbar {
+  min-width: 200px;
+  max-width: 1200px;
+}
+
+.searchbtn {
+  position: absolute;
+  visibility: hidden;
+}
+
+.searchbtn img {
   position: relative;
-}
-
-.searchbar img {
+  right: 97%;
+  bottom: 2px;
+  max-width: none;
   background-color: #8de8fe;
+  visibility: visible !important;
 }
 
-.searchbar img:hover {
+.searchbtn img:hover {
   background-color: #40CDF2;
 }
 
 .searchbar input {
   width: 100%;
-  padding: 0 1.5rem;
-  min-width: 200px;
+  padding: 0 0 0 1.5rem;
   min-height: 3.5rem;
   color: black;
 }
 
-
-.searchbar button {
-  position: absolute;
-  width: 56px;
+.searchelem :hover {
+  background-color: #e5e7eb;
 }
