@@ -38,6 +38,8 @@ const SearchBar: React.FunctionComponent = () => {
 	const reset = () => {
 		setPopular(false);
 		setFocus(false);
+		setQuery("");
+		setAutocomplete([]);
 	}
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,6 +57,8 @@ const SearchBar: React.FunctionComponent = () => {
 	const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
 		chooseDisplay(event.target.value);
 		setFocus(true);
+		if (query.length < 2)
+			setPopular(true);
 		console.log(`user focused "${event.target.value}"`);
 	};
 	
