@@ -7,9 +7,8 @@ body {
 }
 
 .searchbar {
-	position:relative;
-	min-width: 200px;
-	max-width: 1200px;
+	position: relative;
+	min-width: 300px;
 }
 
 .searchbtn {
@@ -48,10 +47,16 @@ body {
 
 .focus {
 	position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
+	width: 100%;
+	height: 100%;
+	left: 0;
 	top: 0;
-  background: rgba(132,139,155,.7);
-  backdrop-filter: blur(2px);
+	background: rgba(132,139,155,.7);
+	backdrop-filter: blur(2px);
+}
+
+.batbat {
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
