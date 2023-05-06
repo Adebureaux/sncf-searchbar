@@ -7,7 +7,7 @@ This project is a Next.js application created with create-next-app. The goal of 
 - A practically identical design of the sncf-connect searchbar
 - Handmades svg icons
 - A responsive design
-- Handling of slow connections (with the possibility of adding a spinner during data loadingg)
+- Handling of slow connections (with the possibility of adding a spinner during data loading)
 - Handle long user input
 - Fetches that avoid useless api calls (e.g. duplicates data)
 - Render tested with cypress
