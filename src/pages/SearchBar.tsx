@@ -54,7 +54,7 @@ const SearchBar: React.FunctionComponent = () => {
 			.catch(e => console.error(e))
 			.then(r => {
 				console.log(r);
-				if (r)
+				if (r && r.length)
 					setPopular(r);
 			})
 			.catch(e => console.error(e));
