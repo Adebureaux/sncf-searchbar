@@ -20,19 +20,34 @@ const SearchBar: React.FunctionComponent = () => {
 	const [focus, setFocus] = useState<boolean>(false);
 	const [submit, setSubmit] = useState<boolean>(false);
 	const [loaded, setLoaded] = useState<boolean>(false);
-	// The value of display will change depending on the user action
-	// 0 -> Do not display, 1 -> Display popular, 2 -> Display autocomplete, 3 -> Display "no result found"
 	const [display, setDisplay] = useState<number>(0);
 
+	const resetFocus = (blur: boolean) => {
+		setAutocomplete([]);
+		setDisplay(0);
+		setFocus(false);
+		if (blur)
+			(document.activeElement as HTMLInputElement)?.blur();
+	};
+
+	// Hook to fetch popular cities by default when the component is loaded
 	useEffect(() => {
 		fetchPopular("https://api.comparatrip.eu/cities/popular/5");
 	}, []);
 
+	// Hook to handle unfocus
 	useEffect(() => {
+		const handleUnfocus = (event: MouseEvent) => {
+			if (!content.current?.contains(event.target as Node)) {
+				resetFocus(false)
+				setLoaded(false);
+			}
+		};
 		document.addEventListener("click", handleUnfocus);
 		return () => {document.removeEventListener("click", handleUnfocus);};
 	}, []);
 
+	// Fetching popular cities based either on destination 'destQuery', or the 5 more popular cities
 	const fetchPopular = async (target: string) => {
 			await fetch(target)
 			.then(r => r.json())
@@ -43,21 +58,28 @@ const SearchBar: React.FunctionComponent = () => {
 			.catch(e => console.error(e));
 	};
 
+	// Fetching autocomplete results based on the user input
 	const fetchAutocomplete = async (set: Function, target: string) => {
 		await fetch(target)
 		.then(r => r.json())
 		.catch(e => console.error(e))
 		.then(r => {
-			if (!r.length)
-				setDisplay(3); // User write something that is not in the database, send no result
-			else
-				setDisplay(2); // Autocomplete the search of the user
+			if (!r.length)	// User write something that is not in the database, send no result
+			setDisplay(3);
+			else 						// Suggest autocomplete
+				setDisplay(2); 
 				set(r);
 				setLoaded(true);
 		})
 		.catch(e => console.error(e));
 	};
 
+	// Setup display
+	// The value of 'display' will change depending on the user action
+	// 0 : Do not display
+	// 1 -> Display popular
+	// 2 -> Display autocomplete
+	// 3 -> Display "no result found"
 	const chooseDisplay = (str : string) => {
 		if (str.length < 2) {
 			setAutocomplete([]);
@@ -70,34 +92,17 @@ const SearchBar: React.FunctionComponent = () => {
 		console.log("autocomplete.length", autocomplete.length);
 	};
 
+	// Handle behavior of pressing enter when input and of clicking the magnifying glass
 	const handleSubmit = (destination: string, fullDestination: string) => {
 		if (fullDestination.length)
 			setDestQuery(fullDestination);
 		else
 			setDestQuery(destination);
 		fetchPopular(`https://api.comparatrip.eu/cities/popular/from/${destination}/5`);
-		setAutocomplete([]);
-		setDisplay(0);
 		if (!submit)
 			setQuery("");
+		resetFocus(true);
 		setSubmit(true);
-		setFocus(false);
-		(document.activeElement as HTMLInputElement)?.blur();
-	};
-
-	const handleUnfocus = (event: MouseEvent) => {
-		if (!content.current?.contains(event.target as Node)) {
-			resetFocus(false)
-			setLoaded(false);
-		}
-	};
-
-	const resetFocus = (blur: boolean) => {
-		setAutocomplete([]);
-		setDisplay(0); // Display nothing
-		setFocus(false);
-		if (blur)
-			(document.activeElement as HTMLInputElement)?.blur();
 	};
 
 	const handleFormEvent = (event: React.FormEvent<HTMLFormElement>) => {
@@ -105,7 +110,6 @@ const SearchBar: React.FunctionComponent = () => {
 		handleSubmit(query, "");
 		chooseDisplay(query);
 	};
-
 
 	const handleClickCity = (event: React.MouseEvent<HTMLDivElement>, city : City) => {
 		if (!submit)
@@ -127,6 +131,7 @@ const SearchBar: React.FunctionComponent = () => {
 		chooseDisplay(event.target.value);
 	};
 
+	// Display each element with this pattern
 	function displaySearchElem(data: City) {
 		return (
 			<div className="py-2 flex cursor-pointer" onClick={e => handleClickCity(e, data)}>
@@ -144,6 +149,7 @@ const SearchBar: React.FunctionComponent = () => {
 		);
 	};
 	
+	// Display the searchbar either for a destination or for a departure
 	function displaySearchForm() {
 		return (
 			<form onSubmit={!submit ? handleFormEvent : undefined}>
@@ -168,6 +174,7 @@ const SearchBar: React.FunctionComponent = () => {
 		);
 	};
 
+	// Display the disabled searchbar and add a reset button
 	function displayDisabledSearchForm() {
 		return (
 			<form className="mt-3">
@@ -201,7 +208,7 @@ const SearchBar: React.FunctionComponent = () => {
 					<div className="py-6">
 						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
 						<div className="searchelem">
-							{/*  */}
+							{/* Case suggest : display popular cities */}
 							{display === 1 && popular.map(
 								(data: City) => (
 									<div key={data.id} className="p-3">
@@ -209,7 +216,7 @@ const SearchBar: React.FunctionComponent = () => {
 									</div>
 								)
 							)}
-							{/*  */}
+							{/* Case autocomplete : display autocomplete based on the match between query user input and the API results */}
 							{display === 2 && loaded && autocomplete.map(
 								(data: City, id: number) => (
 									<div key={id} className="p-3">
@@ -224,7 +231,7 @@ const SearchBar: React.FunctionComponent = () => {
 								<Image className="m-6" alt="search" width={30} height={30} src={searchsim}/>
 								<p className="mt-3 text-gray-400">
 									Recherche avancée<br />
-									<b className="text-black flex-nowrap">"{query}"</b>
+									<b className="text-black flex-nowrap">`&quot;`{query}`&quot;`</b>
 								</p>
 							</div>
 						}
@@ -232,7 +239,7 @@ const SearchBar: React.FunctionComponent = () => {
 				}
 				</ul>
 			</div>
-			<img alt="bat" className="batbat" src="batbat.png" width={50} />
+			<Image alt="bat" className="batbat" width={50} height={50} src="/batbat.png" />
 		</div>
 	);
 };
