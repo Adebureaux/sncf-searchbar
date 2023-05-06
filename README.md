@@ -5,10 +5,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 The task at hand was to build a Typescript-based React component that mimics the search bar found on https://www.sncf-connect.com/.
 This is my very first project on the stack React, I learned a lot about this fabulous framwork, among them : useState, useEffect, FunctionComponent, JSX/TSX syntax, Cypress.
 The code has been thinked to handle 4 types of displays :
-0 : Do not display
-1 -> Display popular
-2 -> Display autocomplete
-3 -> Display no result found
+- 0 : Do not display
+- 1 -> Display popular
+- 2 -> Display autocomplete
+- 3 -> Display no result found
 
 ## Features
 
