@@ -76,7 +76,7 @@ const SearchBar: React.FunctionComponent = () => {
 
 	// Setup display
 	// The value of 'display' will change depending on the user action
-	// 0 : Do not display
+	// 0 -> Do not display
 	// 1 -> Display popular
 	// 2 -> Display autocomplete
 	// 3 -> Display no result found
