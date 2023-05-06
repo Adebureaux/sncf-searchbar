@@ -209,7 +209,7 @@ const SearchBar: React.FunctionComponent = () => {
 						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
 						<div className="searchelem">
 							{/* Case suggest : display popular cities */}
-							{display === 1 && popular?.map(
+							{display === 1 && popular.lenght && popular?.map(
 								(data: City) => (
 									<div key={data.id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
 										{displaySearchElem(data)}
