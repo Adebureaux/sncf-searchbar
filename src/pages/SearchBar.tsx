@@ -221,7 +221,7 @@ const SearchBar: React.FunctionComponent = () => {
 							{/* Case autocomplete : display autocomplete based on the match between query user input and the API results */}
 							{display === 2 && loaded && autocomplete?.map(
 								(data: City, id: number) => (
-									<div key={id} className="p-3">
+									<div key={id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
 										{displaySearchElem(data)}
 									</div>
 								)
