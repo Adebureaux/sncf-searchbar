@@ -134,7 +134,7 @@ const SearchBar: React.FunctionComponent = () => {
 	// Display each element with this pattern
 	function displaySearchElem(data: City) {
 		return (
-			<div className="py-2 flex"}>
+			<div className="py-2 flex">
 				<Image
 					alt="city"
 					className="px-2"
@@ -207,7 +207,7 @@ const SearchBar: React.FunctionComponent = () => {
 				{focus &&
 					<div className="py-6">
 						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
-						<div className="searchelem cursor-pointer" onClick={e => handleClickCity(e, data)>
+						<div className="searchelem cursor-pointer" onClick={e => handleClickCity(e, data)}>
 							{/* Case suggest : display popular cities */}
 							{display === 1 && popular.map(
 								(data: City) => (
