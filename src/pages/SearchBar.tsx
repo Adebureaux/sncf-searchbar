@@ -231,7 +231,7 @@ const SearchBar: React.FunctionComponent = () => {
 								<Image className="m-6" alt="search" width={30} height={30} src={searchsim}/>
 								<p className="mt-3 text-gray-400">
 									Recherche avancée<br />
-									<b className="text-black flex-nowrap">`&quot;`{query}`&quot;`</b>
+									<b className="text-black flex-nowrap">&quot;`{query}`&quot;</b>
 								</p>
 							</div>
 						}
