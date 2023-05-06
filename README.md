@@ -20,7 +20,7 @@ The features of this project include a search bar that closely resembles the one
 - Handle long user input
 - Fetch system that avoid useless api calls (e.g. duplicates data)
 - Render tested with cypress
-
+- Deployed at https://sncf-searchbar.vercel.app/
 
 ## Getting Started
 
