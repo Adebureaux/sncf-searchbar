@@ -209,7 +209,7 @@ const SearchBar: React.FunctionComponent = () => {
 						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
 						<div className="searchelem">
 							{/* Case suggest : display popular cities */}
-							{display === 1 && popular.map(
+							{display === 1 && popular?.map(
 								(data: City) => (
 									<div key={data.id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
 										{displaySearchElem(data)}
@@ -217,7 +217,7 @@ const SearchBar: React.FunctionComponent = () => {
 								)
 							)}
 							{/* Case autocomplete : display autocomplete based on the match between query user input and the API results */}
-							{display === 2 && loaded && autocomplete.map(
+							{display === 2 && loaded && autocomplete?.map(
 								(data: City, id: number) => (
 									<div key={id} className="p-3">
 										{displaySearchElem(data)}
