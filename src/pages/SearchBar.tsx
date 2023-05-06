@@ -79,7 +79,7 @@ const SearchBar: React.FunctionComponent = () => {
 	// 0 : Do not display
 	// 1 -> Display popular
 	// 2 -> Display autocomplete
-	// 3 -> Display "no result found"
+	// 3 -> Display no result found
 	const chooseDisplay = (str : string) => {
 		if (str.length < 2) {
 			setAutocomplete([]);
