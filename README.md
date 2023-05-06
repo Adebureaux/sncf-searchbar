@@ -12,7 +12,7 @@ The code has been thinked to handle 4 types of displays :
 
 ## Features
 
-- A very similar design of the sncf-connect searchbar
+- A practically identical design of the sncf-connect searchbar
 - Handmades svg icons
 - A responsive design
 - Handle slow connexion (could have to add some spinner where the data is loading)
