@@ -3,7 +3,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 The task at hand was to build a Typescript-based React component that mimics the search bar found on https://www.sncf-connect.com/.
-This is my very first project on the stack React, I learned a lot about this fabulous framwork, among them : useState, useEffect, FunctionComponent, JSX/TSX syntax, Cypress.
+This is my very first project on the stack React, I learned a lot about this fabulous framwork, among them : useState, useEffect, useRef, FunctionComponent, JSX/TSX syntax, Cypress.
 The code has been thinked to handle 4 types of displays :
 - 0 -> Do not display
 - 1 -> Display popular
