@@ -1,14 +1,15 @@
 # About this project
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project is a Next.js application created with create-next-app. The goal of this project was to develop a React component using TypeScript that replicates the search bar from https://www.sncf-connect.com/. This was my first project using React, and it provided me with a lot of valuable experience with important concepts such as useState, useEffect, useRef, FunctionComponent, JSX/TSX syntax, and Cypress.
 
-The task at hand was to build a Typescript-based React component that mimics the search bar found on https://www.sncf-connect.com/.
-This is my very first project on the stack React, I learned a lot about this fabulous framwork, among them : useState, useEffect, useRef, FunctionComponent, JSX/TSX syntax, Cypress.
-The code has been thinked to handle 4 types of displays :
-- 0 -> Do not display
-- 1 -> Display popular
-- 2 -> Display autocomplete
-- 3 -> Display no result found
+The code was designed to handle four different display scenarios:
+
+0: Do not display
+1: Display popular
+2: Display autocomplete
+3: Display no result found
+
+The features of this project include a search bar that closely resembles the one found on the sncf-connect website, custom-made SVG icons, responsive design, handling of slow connections (with the possibility of adding a spinner during data loading), handling of long user input, and a fetch system that avoids unnecessary API calls by eliminating duplicate data. The render was also tested with Cypress.
 
 ## Features
 
@@ -23,12 +24,11 @@ The code has been thinked to handle 4 types of displays :
 
 ## Getting Started
 
-First, run the development server:
-
+To get started with this project, simply run the development server using :
 ```bash
 npm run dev
 ```
 
 ## Deployed on Vercel
 
-This app as been deployed to: https://sncf-searchbar.vercel.app/
+This application has been deployed on Vercel and can be accessed at https://sncf-searchbar.vercel.app/.
