@@ -53,7 +53,9 @@ const SearchBar: React.FunctionComponent = () => {
 			.then(r => r.json())
 			.catch(e => console.error(e))
 			.then(r => {
-				setPopular(r);
+				console.log(r);
+				if (r)
+					setPopular(r);
 			})
 			.catch(e => console.error(e));
 	};
@@ -209,7 +211,7 @@ const SearchBar: React.FunctionComponent = () => {
 						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
 						<div className="searchelem">
 							{/* Case suggest : display popular cities */}
-							{display === 1 && popular.lenght && popular?.map(
+							{display === 1 && popular?.map(
 								(data: City) => (
 									<div key={data.id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
 										{displaySearchElem(data)}
