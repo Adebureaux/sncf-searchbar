@@ -3,7 +3,7 @@ import Image from "next/image";
 import city from "/public/icons/city.svg"
 import reset from "/public/icons/reset.svg"
 import search from "/public/icons/search.svg"
-import searchsim from "/public/icons/searchsim.svg"
+import searchmg from "/public/icons/searchmg.svg"
 
 interface City {
 	unique_name: string;
@@ -71,13 +71,13 @@ const SearchBar: React.FunctionComponent = () => {
 		.then(r => r.json())
 		.catch(e => console.error(e))
 		.then(r => {
-			if (r?.length) { 		// If the user inputs a query that does not exist in the database, the system will return no results.
-				setDisplay(2); 
+			if (r?.length) {
+				setDisplay(2);					// If the user inputs a query that does not exist in the database, the system will return no results.
 				set(r);
 				setLoaded(true);
 			}	
-			else 					// Suggest autocomplete results.
-				setDisplay(3);
+			else 					
+				setDisplay(3);					// Suggest autocomplete results.
 		})
 		.catch(e => console.error(e));
 	};
@@ -86,7 +86,7 @@ const SearchBar: React.FunctionComponent = () => {
 		setLoaded(false);
 		if (str.length < 2) {
 			setAutocomplete([]);
-			setDisplay(1); // Make suggestions about popular cities based on the API results.
+			setDisplay(1); 						// Make suggestions about popular cities based on the API results.
 		}
 		else
 			fetchAutocomplete(setAutocomplete, `https://api.comparatrip.eu/cities/autocomplete/?q=${query}`);
@@ -154,7 +154,7 @@ const SearchBar: React.FunctionComponent = () => {
 	// Display the search bar pattern for either a departure or a destination search.
 	function displaySearchForm() {
 		return (
-			<form onSubmit={!submit ? handleFormEvent : undefined}>
+			<form onSubmit={!submit ? handleFormEvent : undefined} data-testid="form-submit">
 				<input
 					className="rounded-full"
 					type="text"
@@ -162,8 +162,9 @@ const SearchBar: React.FunctionComponent = () => {
 					value={query}
 					onChange={handleInputChange}
 					onFocus={handleFocus}
+					data-testid="search-input"
 				/>
-				<button className="searchbtn" type="submit">
+				<button className="searchbtn" type="submit" data-testid="search-btn">
 					<Image
 						alt="search"
 						width={60}
@@ -185,6 +186,7 @@ const SearchBar: React.FunctionComponent = () => {
 					className="rounded-full"
 					type="text"
 					value={destQuery}
+					data-testid="disabled-input"
 				/>
 				<button className="searchbtn" type="submit">
 					<Image
@@ -208,29 +210,44 @@ const SearchBar: React.FunctionComponent = () => {
 				<ul className="bg-white m-3 rounded-xl overflow-auto">
 				{focus &&
 					<div className="py-6">
-						{(display === 1 || display === 2) && <p className="p-3 text-gray-400">Villes</p>}
-						<div className="searchelem">
+						{(display === 1 || display === 2) && 
+							<p className="p-3 text-gray-400">Villes</p>}
+							<div className="searchelem">
 							{/* Case suggestion: Display a collection of popular destinations */}
-							{display === 1 && popular?.map(
-								(data: City) => (
-									<div key={data.id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
-										{displaySearchElem(data)}
-									</div>
-								)
-							)}
-							{/* Case autocomplete: Show autocomplete suggestions based on the user's input and the results obtained from the API. */}
-							{display === 2 && loaded && autocomplete?.map(
-								(data: City, id: number) => (
-									<div key={id} className="p-3 cursor-pointer" onClick={e => handleClickCity(e, data)}>
-										{displaySearchElem(data)}
-									</div>
-								)
-							)}
+								{display === 1 && popular?.map(
+									(data: City) => (
+										<div
+											key={data.id}
+											className="p-3 cursor-pointer"
+											onClick={e => handleClickCity(e, data)}
+											data-testid="popular-cities">
+											{displaySearchElem(data)}
+										</div>
+									)
+								)}
+								{/* Case autocomplete: Show autocomplete suggestions based on the user's input and the results obtained from the API. */}
+								{display === 2 && loaded && autocomplete?.map(
+									(data: City, id: number) => (
+										<div
+											key={id}
+											className="p-3 cursor-pointer"
+											onClick={e => handleClickCity(e, data)}
+											data-testid="autocomplete-results">
+											{displaySearchElem(data)}
+										</div>
+									)
+								)}
 						</div>
 						{/* Error case: When there are no API results that match the user's input, indicate an error has occurred. */}
 						{display === 3 &&
-							<div className="flex">
-								<Image className="m-6" alt="search" width={30} height={30} src={searchsim}/>
+							<div className="flex" data-testid="no-results">
+								<Image
+									className="m-6"
+									alt="search"
+									width={30}
+									height={30}
+									src={searchmg}
+								/>
 								<p className="mt-3 text-gray-400">
 									Recherche avancée<br />
 									<b className="text-black flex-nowrap">&quot;{query}&quot;</b>
